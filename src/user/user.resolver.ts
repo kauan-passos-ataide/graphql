@@ -1,7 +1,7 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/createUser';
-import { AuthResponseDto } from './dto/authResponse.dto';
+import { CreateUserInput } from './dto/input/create-user.input';
+import { AuthResponseDto } from './dto/output/auth-response.dto';
 import { Public } from '../common/decorators/public.decorator';
 import { Response } from 'express';
 import { Res } from '@nestjs/common';
@@ -13,7 +13,7 @@ export class UserResolver {
   @Public()
   @Mutation(() => AuthResponseDto)
   async createUser(
-    @Args('data') data: CreateUserDto,
+    @Args('data') data: CreateUserInput,
     @Res({ passthrough: true }) res: Response,
   ): Promise<AuthResponseDto> {
     const tokens = await this.userService.createUser(data);
