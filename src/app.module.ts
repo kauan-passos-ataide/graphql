@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
@@ -11,6 +10,8 @@ import {
   ApolloServerPluginLandingPageLocalDefault,
   ApolloServerPluginLandingPageProductionDefault,
 } from '@apollo/server/plugin/landingPage/default';
+import { UserModule } from './user/user.module';
+import { AppResolver } from './app.resolver';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import {
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
       playground: false,
+      introspection: true,
       plugins: [
         process.env.NODE_ENV === 'production'
           ? ApolloServerPluginLandingPageProductionDefault()
@@ -34,8 +36,8 @@ import {
     }),
     PrismaModule,
     AuthModule,
+    UserModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AppResolver],
 })
 export class AppModule {}

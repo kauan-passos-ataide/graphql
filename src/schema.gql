@@ -1,0 +1,22 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AuthResponseDto {
+  access_token: String!
+}
+
+input CreateUserDto {
+  email: String!
+  first_name: String!
+  last_name: String!
+  password: String!
+}
+
+type Mutation {
+  createUser(data: CreateUserDto!): AuthResponseDto!
+}
+
+type Query {
+  hello: String!
+}

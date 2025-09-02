@@ -34,7 +34,8 @@ export class JwtGuard implements CanActivate {
     try {
       const accessToken = request.cookies['cu_jwt'] as string;
       const refreshToken = request.cookies['cu_refresh'] as string;
-      if (!accessToken || !refreshToken) {
+      const accessTokenFromHeader = this.extractTokenFromHeader(request);
+      if (!accessToken || !refreshToken || !accessTokenFromHeader) {
         throw new UnauthorizedException();
       }
       const payloadAccessToken: JwtPayload = await this.jwtService.verifyAsync(
@@ -64,8 +65,8 @@ export class JwtGuard implements CanActivate {
     }
   }
 
-  // private extractTokenFromHeader(request: Request): string | undefined {
-  //   const [type, token] = request.headers.authorization?.split(' ') ?? [];
-  //   return type === 'Bearer' ? token : undefined;
-  // }
+  private extractTokenFromHeader(request: Request): string | undefined {
+    const [type, token] = request.headers.authorization?.split(' ') ?? [];
+    return type === 'Bearer' ? token : undefined;
+  }
 }

@@ -9,7 +9,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "nest start --watch",
+    "start:dev": "dotenv -e .env.development nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -18,7 +18,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "db:deploy": "dotenv -e .env.production -- npx prisma migrate deploy && dotenv -e .env.production -- npx prisma generate"
+    "db:deploy": "dotenv -e .env.production -- npx prisma migrate deploy && dotenv -e .env.production -- npx prisma generate",
+    "migrate:dev": "dotenv -e .env.development -- npx prisma migrate dev"
   },
   "dependencies": {
     "@apollo/server": "^4.12.2",
@@ -34,6 +35,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
     "cookie-parser": "^1.4.7",
+    "dotenv-cli": "^10.0.0",
     "graphql": "^16.11.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
